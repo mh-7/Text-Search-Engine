@@ -141,3 +141,7 @@ local.properties
 
 #Project specific files
 Text Search Engine.iml
+
+#other files
+.classpath
+.project
