@@ -6,6 +6,7 @@ public class InvertedIndex {
     private DictionaryInterface<String, LList<Integer>> wordDictionary;
 
     public InvertedIndex() {
+    	wordDictionary = new Dictionary<>();
     }
     public void readFile(){
     	String fileName;

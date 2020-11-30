@@ -54,19 +54,19 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	}
 
 	@Override
-	public Object remove(Object key) {
+	public V remove(K key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object getValue(Object key) {
+	public V getValue(K key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean contains(Object key) {
+	public boolean contains(K key) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -99,6 +99,65 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	public void clear() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	private void initializeDataFields(){
+		firstNode = null;
+		numberOfEntries = 0;
+	}
+	private class Node{
+		//This needs to probably be checked over, I just wanted to get rid of all the errors
+		private K    data; // Key
+		private V 	pair;
+		private Node next; // Link to next node
+
+		private Node(K dataPortion)
+		{
+			data = dataPortion;
+			next = null;
+		} // end constructor
+
+		private Node(K key, V value)
+		{
+			data = key;
+			pair = value;
+		} // end constructor
+
+		private K getData()
+		{
+			return data;
+		} // end getData
+
+		private void setData(K newData)
+		{
+			data = newData;
+		} // end setData
+
+		private Node getNextNode()
+		{
+			return next;
+		} // end getNextNode
+
+		private void setNextNode(Node nextNode)
+		{
+			next = nextNode;
+		} // end setNextNode
+
+		private K getKey(){
+			return null;
+		}
+
+		private void setKey(K key){
+
+		}
+
+		private void setValue(V value){
+
+		}
+
+		private V getValue(){
+			return null;
+		}
 	}
 
 }
