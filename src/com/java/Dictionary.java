@@ -62,7 +62,26 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	@Override
 	public V getValue(K key) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		V result = null;
+		if(key == null)
+			throw new IllegalArgumentException("Cannot add null to a dictionary.");
+		else
+		{
+			Node currentNode = this.firstNode;
+		    while (currentNode != null)
+		    {
+		        if(currentNode.getKey().equals(key))
+		        {
+		        	result = currentNode.getValue();
+		        }
+		        	
+		        currentNode = currentNode.next;
+		    }
+			return result;
+	
+		}
+	    
 	}
 
 	@Override
