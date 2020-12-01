@@ -12,7 +12,7 @@ public class InvertedIndex {
     	String fileName;
     	String str;
     	
-    	for(int i=1;i<401;i++)
+    	for(int i=1;i<423;i++)
     	{
     		fileName="Text-" +i+".txt";
     		

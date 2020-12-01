@@ -138,9 +138,8 @@ public class Dictionary<K extends Comparable<? super K>, V>
 		numberOfEntries = 0;
 	}
 	private class Node{
-		//This needs to probably be checked over, I just wanted to get rid of all the errors
 		private K    Key; // Key
-		private V 	Value;  //Value
+		private V 	Value; // Value
 		private Node next; // Link to next node
 
 		private Node(K key)
@@ -156,32 +155,29 @@ public class Dictionary<K extends Comparable<? super K>, V>
 			next = null;
 		} // end constructor
 
-
-		private Node getNextNode()
-		{
-			return next;
-		} // end getNextNode
-
-		private void setNextNode(Node nextNode)
-		{
-			next = nextNode;
-		} // end setNextNode
-
 		private K getKey(){
 			return Key;
 		}
-
 		private void setKey(K key){
 			Key = key;
-		}
-
-		private void setValue(V value){
-			Value = value;
 		}
 
 		private V getValue(){
 			return Value;
 		}
+		private void setValue(V value){
+			Value = value;
+		}
+
+		private Node getNextNode()
+		{
+			return next;
+		}
+		private void setNextNode(Node nextNode)
+		{
+			next = nextNode;
+		}
+
 	}
 
 }
