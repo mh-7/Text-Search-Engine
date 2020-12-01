@@ -68,6 +68,15 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	@Override
 	public boolean contains(K key) {
 		// TODO Auto-generated method stub
+		if(key == null)
+			return false;
+	    Node currentNode = this.firstNode;
+	    while (currentNode != null)
+	    {
+	        if(currentNode.getKey().equals(key))
+	        	return true;
+	        currentNode = currentNode.next;
+	    }
 		return false;
 	}
 
@@ -127,15 +136,6 @@ public class Dictionary<K extends Comparable<? super K>, V>
 			pair = value;
 		} // end constructor
 
-		private K getData()
-		{
-			return data;
-		} // end getData
-
-		private void setData(K newData)
-		{
-			data = newData;
-		} // end setData
 
 		private Node getNextNode()
 		{
@@ -148,11 +148,11 @@ public class Dictionary<K extends Comparable<? super K>, V>
 		} // end setNextNode
 
 		private K getKey(){
-			return null;
+			return data;
 		}
 
 		private void setKey(K key){
-
+			data = key;
 		}
 
 		private void setValue(V value){
