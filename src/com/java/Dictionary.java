@@ -65,7 +65,7 @@ public class Dictionary<K extends Comparable<? super K>, V>
 		
 		V result = null;
 		if(key == null)
-			throw new IllegalArgumentException("Cannot add null to a dictionary.");
+			throw new IllegalArgumentException("The key is null");
 		else
 		{
 			Node currentNode = this.firstNode;
