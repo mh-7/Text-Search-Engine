@@ -86,19 +86,23 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	@Override
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		return false;
+		if(firstNode == null || numberOfEntries == 0)
+			return true;
+		else
+			return false;
 	}
 
 	@Override
 	public int getSize() {
 		// TODO Auto-generated method stub
-		return 0;
+		return numberOfEntries;
 	}
 
 	@Override
 	public void clear() {
 		// TODO Auto-generated method stub
-		
+		firstNode = null;
+		numberOfEntries = 0;
 	}
 
 	private void initializeDataFields(){
@@ -152,11 +156,11 @@ public class Dictionary<K extends Comparable<? super K>, V>
 		}
 
 		private void setValue(V value){
-
+			pair = value;
 		}
 
 		private V getValue(){
-			return null;
+			return pair;
 		}
 	}
 
