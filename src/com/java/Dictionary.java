@@ -54,9 +54,40 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	}
 
 	@Override
-	public V remove(K key) {
-		// TODO Auto-generated method stub
-		return null;
+	public V remove(K key) 
+	{
+		V result = null;
+		if (key == null)
+			throw new IllegalArgumentException("Key cannot be null.");
+		else 
+		{
+			Node currentNode = firstNode;
+			Node nodeBefore = null;
+			if (key.equals(firstNode.getKey()))
+			{
+				result = firstNode.getValue();
+				firstNode = firstNode.getNextNode();
+				return result;
+			}			
+			else
+			{
+				while ((currentNode != null) && key.compareTo(currentNode.getKey()) > 0)
+				{
+					nodeBefore = currentNode;
+					currentNode = currentNode.getNextNode();
+				}
+				
+				if ( (currentNode != null) && key.equals(currentNode.getKey()) )
+				{
+					result = currentNode.getValue();
+					Node nodeToRemove = nodeBefore.getNextNode();
+					Node nodeAfter = nodeToRemove.getNextNode();
+					nodeBefore.setNextNode(nodeAfter);
+					nodeToRemove = null;
+				}
+				return result;
+			}
+		}
 	}
 
 	@Override
