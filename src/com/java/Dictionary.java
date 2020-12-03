@@ -3,6 +3,8 @@ package com.java;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import InnerClass.LinkedListWithIterator.Node;
+
 public class Dictionary<K extends Comparable<? super K>, V> 
 			implements DictionaryInterface<K, V>
 {
@@ -133,7 +135,7 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	@Override
 	public Iterator getKeyIterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new IteratorForDictionary();
 	}
 
 	@Override
@@ -168,6 +170,44 @@ public class Dictionary<K extends Comparable<? super K>, V>
 		firstNode = null;
 		numberOfEntries = 0;
 	}
+	
+	
+	private class IteratorForDictionary implements Iterator<K>
+	   {
+	      private Node nextNode;
+	      
+	      private IteratorForDictionary()
+	      {
+	         nextNode = firstNode;
+	      } // end default constructor
+	      
+	      public K next()
+	      {
+	         K result;
+	         if (hasNext())
+	         {
+	            result = nextNode.getKey();
+	            nextNode = nextNode.getNextNode(); // Advance iterator
+	         }
+	         else
+	            throw new NoSuchElementException("Illegal call to next(); " +
+	                                             "iterator is after end of list.");
+	         return result; // Return next entry in iteration
+	      } // end next
+
+	      public boolean hasNext()
+	      {
+	         return nextNode != null;
+	      } // end hasNext
+
+	      public void remove()
+	      {
+	         
+	    	  throw new UnsupportedOperationException("remove() is not supported " +
+	                                                 "by this iterator");
+	      } // end remove
+	   } // end IteratorForLinkedList
+	
 	private class Node{
 		private K    Key; // Key
 		private V 	Value; // Value
