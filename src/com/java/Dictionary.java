@@ -3,7 +3,6 @@ package com.java;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import InnerClass.LinkedListWithIterator.Node;
 
 public class Dictionary<K extends Comparable<? super K>, V> 
 			implements DictionaryInterface<K, V>
