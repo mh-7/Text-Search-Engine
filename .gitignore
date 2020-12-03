@@ -72,7 +72,6 @@ fabric.properties
 
 #out folder
 out
-collection
 intellij
 .DS_Store
 .idea
