@@ -26,6 +26,9 @@ public class InvertedIndex {
     	        	   str=scan.next();
     	        	   
     	        	   //here we can call Tokenize method or anything else
+    	        	   str = tokenize(str);
+    	        	   //if(!stopList(str))
+    	        		   
     	    			
     	           }
             }
@@ -51,7 +54,6 @@ public class InvertedIndex {
     
     private boolean stopList(String str)
     {
-    	str = tokenize(str);
     	boolean boo = true;
     	String str1;
     	
