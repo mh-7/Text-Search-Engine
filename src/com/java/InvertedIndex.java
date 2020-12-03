@@ -51,7 +51,7 @@ public class InvertedIndex {
     
     private boolean stopList(String str)
     {
-    	tokenize(str);
+    	str = tokenize(str);
     	boolean boo = true;
     	String str1;
     	
