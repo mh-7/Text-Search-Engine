@@ -3,17 +3,21 @@ import java.io.*;
 import java.util.*;
 
 public class InvertedIndex {
-    private DictionaryInterface<String, LList<Integer>> wordDictionary;
+    private DictionaryInterface<String, ListInterface<Integer>> wordDictionary;
+    private static int idNum;
 
     public InvertedIndex() {
     	wordDictionary = new Dictionary<>();
+    	
     }
     public void readFile(){
     	String fileName;
     	String str;
     	
+    	
     	for(int i=1;i<424;i++)
     	{
+    		idNum=i;
     		fileName="Text-" +i+".txt";
     		
     		try
@@ -27,8 +31,15 @@ public class InvertedIndex {
     	        	   
     	        	   //here we can call Tokenize method or anything else
     	        	   str = tokenize(str);
-    	        	   //if(!stopList(str))
+    	       
+    	        	   if(stopList(str) && !wordDictionary.contains(str))
+    	        	   {
+  
+    	        		   ListInterface<Integer> idList=new LList<>();
+    	        		   wordDictionary.add(str, idList);
     	        		   
+    	        	   }
+    	   
     	    			
     	           }
             }
@@ -64,7 +75,7 @@ public class InvertedIndex {
 	           while(scan.hasNext())
 	           {
 	        	   str1 = scan.next();
-	        	   if(str == str1)
+	        	   if(str.equals(str1))
 	        		   boo = false;
 	           }
         }
