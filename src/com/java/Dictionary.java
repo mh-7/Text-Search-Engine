@@ -132,9 +132,9 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	}
 
 	@Override
-	public Iterator getKeyIterator() {
+	public Iterator<K> getKeyIterator() {
 		// TODO Auto-generated method stub
-		return new IteratorForDictionary();
+		return new keyIterator();
 	}
 
 	@Override
@@ -171,11 +171,11 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	}
 	
 	
-	private class IteratorForDictionary implements Iterator<K>
+	public class keyIterator implements Iterator<K>
 	   {
 	      private Node nextNode;
 	      
-	      private IteratorForDictionary()
+	      private keyIterator()
 	      {
 	         nextNode = firstNode;
 	      } // end default constructor
