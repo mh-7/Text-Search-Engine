@@ -18,7 +18,7 @@ public class InvertedIndex {
     		
     		try
             {
-    			   File file = new File (fileName);
+    			   File file = new File ("src/collection/"+fileName);
     	           Scanner scan = new Scanner(file);
     	           
     	           while(scan.hasNext())
