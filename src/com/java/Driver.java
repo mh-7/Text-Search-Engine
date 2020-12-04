@@ -19,7 +19,8 @@ public class Driver {
 		
 		while (inorder.hasNext())
 		{	
-			System.out.print(inorder.next() + " " );
+			String str = inorder.next();
+			System.out.print(str + " " + ii.wordDictionary.getValue(str).getCount() +" ");
 		} // end while
 		
 		

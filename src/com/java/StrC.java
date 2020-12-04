@@ -1,13 +1,20 @@
 package com.java;
 
 public class StrC {
-	    String str;
-	    int count;
+	    private String str;
+	    private int count;
+	    
 	    public StrC()
 	    {
 	        str = "";
-	        count =0;
+	        count =1;
 	    }
+	    public StrC(String str)
+	    {
+	    	this.str = str;
+	    	count = 1;
+	    }
+	    
 	    public void setString(String str)
 	    {
 	        this.str = str;

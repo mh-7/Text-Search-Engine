@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 public class InvertedIndex {
-	public DictionaryInterface<String, String> wordDictionary;
+	public DictionaryInterface<String, StrC> wordDictionary;
 	private static int idNum;
 
 	public InvertedIndex() {
@@ -32,10 +32,13 @@ public class InvertedIndex {
 						str = tokenize(str);
 
 						if (stopList(str) && !wordDictionary.contains(str)) {
+							StrC string = new StrC(str);
+							wordDictionary.add(str, string);
 
-							ListInterface<Integer> idList = new LList<>();
-							wordDictionary.add(str, idList);
-
+						}
+						else if(wordDictionary.contains(str) && stopList(str))
+						{
+							wordDictionary.getValue(str).tally();
 						}
 
 
