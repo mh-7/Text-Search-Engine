@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 public class InvertedIndex {
-    private DictionaryInterface<String, ListInterface<Integer>> wordDictionary;
+    public DictionaryInterface<String, ListInterface<Integer>> wordDictionary;
     private static int idNum;
 
     public InvertedIndex() {
@@ -15,14 +15,15 @@ public class InvertedIndex {
     	String str;
     	
     	
-    	for(int i=1;i<424;i++)
+    	for(int i=1;i<2;i++)
     	{
-    		idNum=i;
+    		idNum=1;
     		fileName="Text-" +i+".txt";
     		
-    		try
-            { //src/com/java/collection/Text-1.txt
-    			   File file = new File ("src/com/java/collection/"+fileName);
+    		try { //src/com/java/collection/Text-1.txt
+            {
+    			   File file = new File ("src\\com\\java\\collection\\"+fileName);
+
     	           Scanner scan = new Scanner(file);
     	           
     	           while(scan.hasNext())
@@ -46,8 +47,9 @@ public class InvertedIndex {
             {
                 System.out.println("The file not found");
             }
-
     	}
+
+//    	}
     	
     	
 
@@ -69,7 +71,7 @@ public class InvertedIndex {
     	
     	try
         {
-			   File file = new File ("stop-list.txt");
+			   File file = new File ("src\\com\\java\\stop-list.txt");
 	           Scanner scan = new Scanner(file);
 	           while(scan.hasNext())
 	           {
