@@ -171,7 +171,7 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	}
 	
 	
-	private class IteratorForDictionary implements Iterator<K>
+	public class IteratorForDictionary implements Iterator<K>
 	   {
 	      private Node nextNode;
 	      
