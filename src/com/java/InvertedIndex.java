@@ -21,14 +21,13 @@ public class InvertedIndex {
     		fileName="Text-" +i+".txt";
     		
     		try
-            {
-    			   File file = new File ("src/collection/"+fileName);
+            { //src/com/java/collection/Text-1.txt
+    			   File file = new File ("src/com/java/collection/"+fileName);
     	           Scanner scan = new Scanner(file);
     	           
     	           while(scan.hasNext())
     	           {
     	        	   str=scan.next();
-    	        	   
     	        	   //here we can call Tokenize method or anything else
     	        	   str = tokenize(str);
     	       
