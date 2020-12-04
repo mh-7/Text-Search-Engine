@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 public class InvertedIndex {
-	public DictionaryInterface<String, ListInterface<Integer>> wordDictionary;
+	public DictionaryInterface<String, String> wordDictionary;
 	private static int idNum;
 
 	public InvertedIndex() {
@@ -19,7 +19,7 @@ public class InvertedIndex {
 		for (int i = 1; i < 2; i++) {
 			idNum = 1;
 			fileName = "Text-" + i + ".txt";
-
+			int count = 0;
 			try {
 				{
 					File file = new File("src\\com\\java\\collection\\" + fileName);
