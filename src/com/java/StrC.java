@@ -34,7 +34,7 @@ public class StrC {
 	    }
 	    public String getString()
 	    {
-	        return str;
+	        return str + " " + count;
 	    }
 	    public boolean sameId(int idNum)
 	    {

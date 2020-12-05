@@ -95,4 +95,28 @@ public class InvertedIndex {
 				count = strArray.length;
 				return count;				
 			}
+			
+			public void getWord()
+			{
+				Scanner input=new Scanner(System.in);
+				String inputGet;
+				String str;
+				
+				System.out.println("\n\nEnter the terms separated by space ");
+				inputGet=input.nextLine();
+				String[] inArr=inputGet.split(" ");
+				
+				for(int i=0;i<inArr.length;i++)
+				{
+					str=tokenize(inArr[i]);
+					
+					if(!stopList(str))
+					{
+						//call docMatch method
+					}
+
+				}
+	
+				
+			}
 }
