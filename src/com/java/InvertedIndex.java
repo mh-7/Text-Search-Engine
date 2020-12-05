@@ -87,4 +87,12 @@ public class InvertedIndex {
 				}
 				return boo;
 			}
+			
+			private int strHelper(StrC str)
+			{
+				int count = 0;
+				String[] strArray = str.getString().split(", ");
+				count = strArray.length;
+				return count;				
+			}
 }
