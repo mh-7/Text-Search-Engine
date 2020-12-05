@@ -15,15 +15,19 @@ public class StrC {
 	    	count = 1;
 	    }
 	    
-	    public void setString(String str)
+	    public void addString(String str1)
 	    {
-	        this.str = str;
+	        this.str += " "+count + ", " + str1;
 	    }
 	    public void tally()
 	    {
 	        count++;
 	    }
 	    
+	    public void reset()
+	    {
+	    	count = 1;
+	    }
 	    public int getCount()
 	    {
 	        return count;
@@ -32,4 +36,15 @@ public class StrC {
 	    {
 	        return str;
 	    }
+	    public boolean sameId(int idNum)
+	    {
+	    	String[] arr = str.split(", ");
+	    	for(int i = 0; i < arr.length; i++)
+	    	{
+	    		if(arr[i].equals("" + idNum))
+	    			return true;
+	    	}
+	    	return false;
+	    }
+	    
 	}

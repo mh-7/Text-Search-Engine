@@ -16,8 +16,8 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 2; i++) {
-			idNum = 1;
+		for (int i = 1; i < 3; i++) {
+			idNum = i;
 			fileName = "Text-" + i + ".txt";
 			int count = 0;
 			try {
@@ -32,13 +32,20 @@ public class InvertedIndex {
 						str = tokenize(str);
 
 						if (stopList(str) && !wordDictionary.contains(str)) {
-							StrC string = new StrC(str);
+							StrC string = new StrC("" + idNum);
 							wordDictionary.add(str, string);
-
+							
 						}
 						else if(wordDictionary.contains(str) && stopList(str))
 						{
-							wordDictionary.getValue(str).tally();
+							StrC current = wordDictionary.getValue(str);
+							if(current.sameId(idNum))
+								current.tally();
+							else
+							{
+								current.addString("" + idNum);
+								current.reset();
+							}
 						}
 
 
