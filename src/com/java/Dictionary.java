@@ -138,9 +138,9 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	}
 
 	@Override
-	public Iterator getValueIterator() {
+	public Iterator<V> getValueIterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new valueIterator();
 	}
 
 	@Override
@@ -169,7 +169,35 @@ public class Dictionary<K extends Comparable<? super K>, V>
 		firstNode = null;
 		numberOfEntries = 0;
 	}
-	
+
+	public class valueIterator implements Iterator<V>
+	{
+		private Node nextNode;
+
+		private valueIterator(){nextNode = firstNode; }
+
+		public V next(){
+			V result;
+			if (hasNext())
+			{
+				result = nextNode.getValue();
+				nextNode = nextNode.getNextNode(); // Advance iterator
+			}
+			else
+				throw new NoSuchElementException("Illegal call to next(); " +
+						"iterator is after end of list.");
+			return result; // Return next entry in iteration
+		}
+		public boolean hasNext(){
+			return nextNode != null;
+		}
+		public void remove()
+		{
+
+			throw new UnsupportedOperationException("remove() is not supported " +
+					"by this iterator");
+		} // end remove
+	}
 
 	public class keyIterator implements Iterator<K>
 	   {

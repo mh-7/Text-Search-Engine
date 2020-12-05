@@ -10,23 +10,8 @@ public class Driver {
 		InvertedIndex ii=new InvertedIndex();
 		
 		ii.readFile();
-		
-		
-		
-		Iterator<String> inorder = ii.wordDictionary.getKeyIterator();
-		
-		String str = inorder.next();
-		
-		while(inorder.hasNext())
-		{
-			str = inorder.next();
-			System.out.println(str + " "+ ii.wordDictionary.getValue(str).getString() + " "+ ii.wordDictionary.getValue(str).getCount() +" ");
 
-		}
-
-		
-
-		
+		ii.display();
 
 	}
 

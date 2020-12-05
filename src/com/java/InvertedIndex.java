@@ -3,8 +3,8 @@ import java.io.*;
 import java.util.*;
 
 public class InvertedIndex {
-	public DictionaryInterface<String, StrC> wordDictionary;
-	private static int idNum;
+	public DictionaryInterface<String, ListWithIteratorInterface<Integer>> wordDictionary;
+	private static Integer idNum;
 
 	public InvertedIndex() {
 		wordDictionary = new Dictionary<>();
@@ -16,38 +16,36 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 5; i++) {
-			idNum = i;
+		for (int i = 1; i < 3; i++) {
+			idNum = 1000 + i;
 			fileName = "Text-" + i + ".txt";
-			int count = 0;
 			try {
 				{
-					File file = new File("src\\com\\java\\collection\\" + fileName);
+					File file = new File("src/com/java/collection/" + fileName);
 
 					Scanner scan = new Scanner(file);
 
 					while (scan.hasNext()) {
-						str = scan.next();
-						//here we can call Tokenize method or anything else
-						str = tokenize(str);
-
-						if (stopList(str) && !wordDictionary.contains(str)) {
-							StrC string = new StrC("" + idNum);
-							wordDictionary.add(str, string);
-							
-						}
-						else if(wordDictionary.contains(str) && stopList(str))
-						{
-							StrC current = wordDictionary.getValue(str);
-							if(current.sameId(idNum))
-								current.tally();
-							else
-							{
-								current.addString("" + idNum);
-								current.reset();
+						str = tokenize(scan.next());
+						if(stopList(str)){
+							ListWithIteratorInterface<Integer> idList = wordDictionary.getValue(str);
+							if(idList==null){
+								idList = new LinkedListWithIterator<>();
+								wordDictionary.add(str, idList);
+								idList.add(idNum);
+								idList.add(0);
+							}
+							if(idList.contains(idNum)){
+								int pos = idList.getLength();
+								int count = idList.getEntry(pos);
+								count++;
+								idList.replace(pos, count);
+							}
+							else {
+								idList.add(idNum);
+								idList.add(0);
 							}
 						}
-
 
 					}
 				}
@@ -75,7 +73,7 @@ public class InvertedIndex {
 				String str1;
 
 				try {
-					File file = new File("src\\com\\java\\stop-list.txt");
+					File file = new File("src/com/java/stop-list.txt");
 					Scanner scan = new Scanner(file);
 					while (scan.hasNext()) {
 						str1 = scan.next();
@@ -93,6 +91,41 @@ public class InvertedIndex {
 				int count = 0;
 				String[] strArray = str.getString().split(", ");
 				count = strArray.length;
-				return count;				
+				return count;
+				//counts number of documents the term is in
+			}
+
+			public void matchMeasure(String [] array){
+				String str = "test";
+				if(wordDictionary.contains(str)){
+					wordDictionary.getValue(str);
+				}
+			}
+
+			public void documentMatcher(String str){
+			//parse string into array of strings
+
+			}
+
+			public void searchTerm(){
+				Scanner scan = new Scanner(System.in);
+
+			}
+
+			public void display(){
+			Iterator<String> keyIterator = wordDictionary.getKeyIterator();
+			Iterator<ListWithIteratorInterface<Integer>> valueIterator = wordDictionary.getValueIterator();
+
+			while (keyIterator.hasNext()){
+				System.out.println("Value: " + keyIterator.next() + " ");
+				ListWithIteratorInterface<Integer> idList = valueIterator.next();
+				Iterator<Integer> listIterator = idList.getIterator();
+
+				System.out.print("Key: ");
+					while (listIterator.hasNext()){
+					System.out.print(+ listIterator.next() + " ");
+				}
+				System.out.println();
+			}
 			}
 }
