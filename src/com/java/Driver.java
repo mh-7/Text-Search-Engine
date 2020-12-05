@@ -15,14 +15,17 @@ public class Driver {
 		
 		Iterator<String> inorder = ii.wordDictionary.getKeyIterator();
 		
+		String str = inorder.next();
 		
+		while(inorder.hasNext())
+		{
+			str = inorder.next();
+			System.out.println(str + " "+ ii.wordDictionary.getValue(str).getString() + " "+ ii.wordDictionary.getValue(str).getCount() +" ");
+
+		}
+
 		
-		while (inorder.hasNext())
-		{	
-			String str = inorder.next();
-			System.out.print(str + " "+ ii.wordDictionary.getValue(str).getString() + " "+ ii.wordDictionary.getValue(str).getCount() +" ");
-		} // end while
-		
+
 		
 
 	}

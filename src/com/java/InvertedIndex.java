@@ -16,7 +16,7 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 4; i++) {
+		for (int i = 1; i < 5; i++) {
 			idNum = i;
 			fileName = "Text-" + i + ".txt";
 			int count = 0;
