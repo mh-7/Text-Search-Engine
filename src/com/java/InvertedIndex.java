@@ -101,6 +101,8 @@ public class InvertedIndex {
 				Scanner input=new Scanner(System.in);
 				String inputGet;
 				String str;
+				ArrayList<StrB> bArr = new ArrayList<StrB>();
+				StrB b;
 				
 				System.out.println("\n\nEnter the terms separated by space: ");
 				inputGet=input.nextLine();
@@ -116,6 +118,17 @@ public class InvertedIndex {
 						if(!str.equals(null))
 						{
 							System.out.println(str);
+							String[] strArr = match(str);
+							for(int j = 0; j < strArr.length/2; j+=2)
+							{
+								if(checkB(bArr, str)!= -1)
+									b = new StrB(str);
+								else
+								{
+									b = bArr.get(checkB(bArr, str));
+									b.addCount(Integer.parseInt(strArr[j+1]));
+								}
+							}
 							
 						}
 					}
@@ -123,6 +136,17 @@ public class InvertedIndex {
 	
 			}
 			
+			public int checkB(ArrayList<StrB> bArr, String str)
+			{
+				StrB[] b = (StrB[]) bArr.toArray();
+				for(int i = 0; i < b.length; i++)
+				{
+					String one = b[i].getString();
+					if(one.equals(str))
+						return i;
+				}
+				return -1;
+			}
 			
 			public String docMatch(String str)
 			{
