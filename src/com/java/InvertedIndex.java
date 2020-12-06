@@ -5,10 +5,12 @@ import java.util.*;
 public class InvertedIndex {
 	public DictionaryInterface<String, ListWithIteratorInterface<Integer>> wordDictionary;
 	private static Integer idNum;
-
+	public int results = 0;
+	public int retrievalTime = 0;
+	ListWithIteratorInterface<Document> docList;
 	public InvertedIndex() {
 		wordDictionary = new Dictionary<>();
-
+		docList = new LinkedListWithIterator<>();
 	}
 
 	public void readFile() {
@@ -16,7 +18,7 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i < 20; i++) {
 			idNum = 1000 + i;
 			fileName = "Text-" + i + ".txt";
 			try {
@@ -85,35 +87,14 @@ public class InvertedIndex {
 				}
 				return boo;
 			}
-			
-			private int strHelper(StrC str)
+
+			public void documentMatch()
 			{
-				int count = 0;
-				String[] strArray = str.getString().split(", ");
-				count = strArray.length;
-				return count;
-				//counts number of documents the term is in
-			}
-
-			public void matchMeasure(String [] array){
-				String str = "test";
-				if(wordDictionary.contains(str)){
-					wordDictionary.getValue(str);
-				}
-			}
-
-			public void documentMatcher(String str){
-			//parse string into array of strings
-
-			}
-
-
-			public void getTerm()
-			{
+				//get terms
 				Scanner scanner=new Scanner(System.in);
 				String term;
 				String str;
-
+				ListWithIteratorInterface<Document> docList = new LinkedListWithIterator<>();
 				System.out.println("Enter the terms separated by space ");
 				term=scanner.nextLine();
 				String[] inArr=term.split(" ");
@@ -125,38 +106,50 @@ public class InvertedIndex {
 					if(stopList(str))
 					{
 						if(wordDictionary.contains(str)){
-							//System.out.println(str);
-							getKey(str);
-							System.out.println();
-
+							//get docId's and docFrequency, add to docList
+							matchScore(str);
 						}
-						//call docMatch method
-						//System.out.println(wordDictionary.getValue(str));
 					}
 
 				}
+				System.out.println(results + " results " + "(" + retrievalTime + " seconds)");
 			}
 
-			public void getKey(String str){
+			public void matchScore(String str){
 				Iterator<String> keyIterator = wordDictionary.getKeyIterator();
 				Iterator<ListWithIteratorInterface<Integer>> valueIterator = wordDictionary.getValueIterator();
 				ListWithIteratorInterface<Integer> idList = valueIterator.next();
 				String current = keyIterator.next();
 				while (keyIterator.hasNext()){
 					if(str.equals(current)){
-						System.out.println(current);
 						Iterator<Integer> listIterator = idList.getIterator();
-						System.out.print("Key: ");
 						while (listIterator.hasNext()){
-							System.out.print(+ listIterator.next() + " ");
+							int docID = listIterator.next();
+							Document temp = new Document(docID);
+							int freq = listIterator.next();
+							Iterator<Document> docIterator = docList.getIterator();
+								while (docIterator.hasNext()){
+									Document curDoc = docIterator.next();
+									if(curDoc.docID == docID){
+										int prfq = curDoc.docFq;
+										int newfq = prfq + freq;
+										curDoc.setDocFq(newfq);
+										System.out.println("Document Id: "+ curDoc.docID + " Match Score: " + curDoc.getDocFq());
+									}
+								}
+								temp.setDocFq(freq);
+								docList.add(temp);
+								System.out.println("Documetn Id: " + docID + " Match Score: " + freq);
+
 						}
 						}
 					idList = valueIterator.next();
 					current = keyIterator.next();
 					}
+				results = docList.getLength();
 				}
 
-
+			//display entire dictionary
 			public void display(){
 			Iterator<String> keyIterator = wordDictionary.getKeyIterator();
 			Iterator<ListWithIteratorInterface<Integer>> valueIterator = wordDictionary.getValueIterator();

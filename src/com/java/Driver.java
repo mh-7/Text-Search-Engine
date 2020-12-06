@@ -11,13 +11,11 @@ public class Driver {
 		
 		ii.readFile();
 
-		ii.display();
 
-		//ii.getKey("accept");
-		//ii.getKey("able");
-		System.out.println();
-		//ii.getTerm();
+		//ii.display();
 
+
+		ii.documentMatch();
 	}
 
 }
