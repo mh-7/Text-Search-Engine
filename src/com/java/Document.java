@@ -2,15 +2,15 @@ package com.java;
 
 public class Document {
     int docID = 0;
-    int docFq = 0;
+    int frequency = 0;
 
     public Document(int docID) {
         this.docID = docID;
     }
 
-    public Document(int docID, int docFq) {
+    public Document(int docID, int frequency) {
         this.docID = docID;
-        this.docFq = docFq;
+        this.frequency = frequency;
     }
 
     public int getDocID() {
@@ -21,11 +21,11 @@ public class Document {
         this.docID = docID;
     }
 
-    public int getDocFq() {
-        return docFq;
+    public int getFrequency() {
+        return frequency;
     }
 
-    public void setDocFq(int docFq) {
-        this.docFq = docFq;
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
     }
 }

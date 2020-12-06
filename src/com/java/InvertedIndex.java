@@ -1,4 +1,5 @@
 package com.java;
+import javax.print.Doc;
 import java.io.*;
 import java.util.*;
 
@@ -6,8 +7,9 @@ public class InvertedIndex {
 	public DictionaryInterface<String, ListWithIteratorInterface<Integer>> wordDictionary;
 	private static Integer idNum;
 	public int results = 0;
-	public int retrievalTime = 0;
+	public double retrievalTime = 0;
 	ListWithIteratorInterface<Document> docList;
+	long startTime = 0;
 	public InvertedIndex() {
 		wordDictionary = new Dictionary<>();
 		docList = new LinkedListWithIterator<>();
@@ -57,8 +59,7 @@ public class InvertedIndex {
 					System.out.println("The file not found");
 				}
 		}
-
-			}
+	}
 			//Can take in a word and return it without all the Punctuation and makes
 			//it all into lower case.
 			private String tokenize (String str)
@@ -98,7 +99,6 @@ public class InvertedIndex {
 				System.out.println("Enter the terms separated by space ");
 				term=scanner.nextLine();
 				String[] inArr=term.split(" ");
-
 				for(int i=0;i<inArr.length;i++)
 				{
 					str=tokenize(inArr[i]);
@@ -112,42 +112,60 @@ public class InvertedIndex {
 					}
 
 				}
-				System.out.println(results + " results " + "(" + retrievalTime + " seconds)");
+				results();
 			}
 
 			public void matchScore(String str){
+				//start timer
+				startTime = System.nanoTime();
 				Iterator<String> keyIterator = wordDictionary.getKeyIterator();
 				Iterator<ListWithIteratorInterface<Integer>> valueIterator = wordDictionary.getValueIterator();
 				ListWithIteratorInterface<Integer> idList = valueIterator.next();
-				String current = keyIterator.next();
+				String currentKey = keyIterator.next();
 				while (keyIterator.hasNext()){
-					if(str.equals(current)){
+					if(str.equals(currentKey)){
 						Iterator<Integer> listIterator = idList.getIterator();
 						while (listIterator.hasNext()){
 							int docID = listIterator.next();
-							Document temp = new Document(docID);
-							int freq = listIterator.next();
-							Iterator<Document> docIterator = docList.getIterator();
-								while (docIterator.hasNext()){
-									Document curDoc = docIterator.next();
-									if(curDoc.docID == docID){
-										int prfq = curDoc.docFq;
-										int newfq = prfq + freq;
-										curDoc.setDocFq(newfq);
-										System.out.println("Document Id: "+ curDoc.docID + " Match Score: " + curDoc.getDocFq());
+							int frequency = listIterator.next();
+							Document document = new Document(docID);
+							Iterator<Document> documentIterator = docList.getIterator();
+								while (documentIterator.hasNext()){
+									Document currentDocument = documentIterator.next();
+									if(currentDocument.docID == docID){
+										int oldFrequency = currentDocument.frequency;
+										int newFrequency = oldFrequency + frequency;
+										currentDocument.setFrequency(newFrequency);
+										//insertion sort into order
 									}
 								}
-								temp.setDocFq(freq);
-								docList.add(temp);
-								System.out.println("Documetn Id: " + docID + " Match Score: " + freq);
-
+								document.setFrequency(frequency);
+								docList.add(document);
 						}
 						}
 					idList = valueIterator.next();
-					current = keyIterator.next();
+					currentKey = keyIterator.next();
 					}
 				results = docList.getLength();
 				}
+
+			//return results
+			public void results(){
+				//end timer
+				Long endtime = System.nanoTime();
+				long totalTime = endtime - startTime;
+				retrievalTime = (double)totalTime/ 1_000_000_000.0;
+				System.out.println(results + " results " + "(" + retrievalTime + " seconds)");
+				Iterator<Document> documentIterator = docList.getIterator();
+				int count = 0;
+				while (documentIterator.hasNext() && count < 10){
+					Document document = documentIterator.next();
+					int docID = document.docID;
+					int frequency = document.frequency;
+					System.out.println("Document Id: " + docID + " Match Score: " + frequency);
+					count++;
+				}
+			}
 
 			//display entire dictionary
 			public void display(){
