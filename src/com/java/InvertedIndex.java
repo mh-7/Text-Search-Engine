@@ -138,10 +138,9 @@ public class InvertedIndex {
 			
 			public int checkB(ArrayList<StrB> bArr, String str)
 			{
-				StrB[] b = (StrB[]) bArr.toArray();
-				for(int i = 0; i < b.length; i++)
+				for(int i = 0; i < bArr.size(); i++)
 				{
-					String one = b[i].getString();
+					String one = bArr.get(i).getString();
 					if(one.equals(str))
 						return i;
 				}
