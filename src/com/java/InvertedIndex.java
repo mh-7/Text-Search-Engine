@@ -20,7 +20,7 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 20; i++) {
+		for (int i = 1; i < 50; i++) {
 			idNum = 1000 + i;
 			fileName = "Text-" + i + ".txt";
 			try {
@@ -92,6 +92,10 @@ public class InvertedIndex {
 			public void documentMatch()
 			{
 				//get terms
+				//make sure Doclist is empty
+				docList.clear();
+				//clear results
+				results = 0;
 				Scanner scanner=new Scanner(System.in);
 				String term;
 				String str;
@@ -136,11 +140,11 @@ public class InvertedIndex {
 										int oldFrequency = currentDocument.frequency;
 										int newFrequency = oldFrequency + frequency;
 										currentDocument.setFrequency(newFrequency);
-										//insertion sort into order
+										sortDocList(currentDocument);
 									}
 								}
 								document.setFrequency(frequency);
-								docList.add(document);
+								sortDocList(document);
 						}
 						}
 					idList = valueIterator.next();
@@ -148,6 +152,26 @@ public class InvertedIndex {
 					}
 				results = docList.getLength();
 				}
+
+
+			//sort doclist
+			public void sortDocList(Document document){
+				//move document into order ranked by frequency
+				if(docList.isEmpty()){
+					docList.add(document);
+				}
+				Iterator<Document> sortIterator = docList.getIterator();
+				int position = 1;
+				while (sortIterator.hasNext()){
+					Document thisDocument = sortIterator.next();
+					if(document.frequency >= thisDocument.frequency){
+						docList.add(position, document);
+						break;
+						//possible bug here, should remove old document, but shouldn't be a problem when indexing all files
+					}
+					position++;
+				}
+			}
 
 			//return results
 			public void results(){
