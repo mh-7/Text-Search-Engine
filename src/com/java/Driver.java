@@ -8,31 +8,28 @@ public class Driver {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
+		boolean cont=true;
+		String str;
+		Scanner input=new Scanner(System.in);
 		
 		InvertedIndex ii=new InvertedIndex();
-		
 		ii.readFile();
-		
-		
-		
-		
-		Iterator<String> inorder = ii.wordDictionary.getKeyIterator();
-		
-		String str = inorder.next();
-		
-		while(inorder.hasNext())
+
+		while(cont)
 		{
-			str = inorder.next();
-			System.out.println(str + " "+ ii.wordDictionary.getValue(str).getString()) ;
+			ii.getWord();
+			System.out.println("\nDo you want to continue? yes/YES ,anything else will quit the program");
+			str=input.nextLine();
+			if(str.equals("yes") || str.equals("YES"))
+				cont=true;
+			else
+				cont=false;
+			
 		}
-		
-		
-		
-		
-		ii.getWord();
-		
-		
-		
+
+		System.out.println("\nEnd");
+
+	
 	}
 
 }

@@ -5,10 +5,12 @@ import java.util.*;
 public class InvertedIndex {
 	public DictionaryInterface<String, StrC> wordDictionary;
 	private static int idNum;
+	private static ArrayList<String> StopList;
 
 	public InvertedIndex() {
 		wordDictionary = new Dictionary<>();
-
+		StopList=new ArrayList<>();
+		stopListfill();
 	}
 
 	public void readFile() {
@@ -16,27 +18,27 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 5; i++) {
+		for (int i = 1; i < 101; i++) {
 			idNum = i;
 			fileName = "Text-" + i + ".txt";
-			int count = 0;
 			try {
 				{
 					File file = new File("src\\com\\java\\collection\\" + fileName);
 
 					Scanner scan = new Scanner(file);
+					
 
 					while (scan.hasNext()) {
 						str = scan.next();
 						//here we can call Tokenize method or anything else
 						str = tokenize(str);
 
-						if (stopList(str) && !wordDictionary.contains(str)) {
+						if (checkStopList(str) && !wordDictionary.contains(str)) {
 							StrC string = new StrC("" + idNum);
 							wordDictionary.add(str, string);
 							
 						}
-						else if(wordDictionary.contains(str) && stopList(str))
+						else if(wordDictionary.contains(str) && checkStopList(str))
 						{
 							StrC current = wordDictionary.getValue(str);
 							if(current.sameId(idNum))
@@ -50,14 +52,16 @@ public class InvertedIndex {
 
 
 					}
+					
 				}
 			}
     		catch(IOException io)
 				{
 					System.out.println("The file not found");
 				}
-		}
+			}
 
+			
 			}
 			//Can take in a word and return it without all the Punctuation and makes
 			//it all into lower case.
@@ -68,43 +72,47 @@ public class InvertedIndex {
 				withOutPunc = withOutPunc.toLowerCase();
 				return withOutPunc;
 			}
-
-			private boolean stopList (String str)
+			
+			private void stopListfill()
 			{
-				boolean boo = true;
 				String str1;
-
 				try {
 					File file = new File("src\\com\\java\\stop-list.txt");
 					Scanner scan = new Scanner(file);
 					while (scan.hasNext()) {
 						str1 = scan.next();
-						if (str.equals(str1))
-							boo = false;
+						StopList.add(str1);
 					}
 				} catch (IOException io) {
 					System.out.println("The file not found");
 				}
-				return boo;
+				
 			}
 			
-			private int strHelper(StrC str)
+			private boolean checkStopList(String str)
 			{
-				int count = 0;
-				String[] strArray = str.getString().split(", ");
-				count = strArray.length;
-				return count;				
+				for(int i=0;i<StopList.size();i++)
+				{
+					if(str.equals(StopList.get(i)))
+						return false;
+
+				}
+				
+				return true;
+				
 			}
+			
 			
 			public void getWord()
 			{
 				Scanner input=new Scanner(System.in);
 				String inputGet;
 				String str;
-				ArrayList<StrB> bArr = new ArrayList<StrB>();
-				StrB b;
+				ArrayList<String> bArr = new ArrayList<>();
+				ArrayList<Integer> termCounter = new ArrayList<>();
 				
-				System.out.println("\n\nEnter the terms separated by space: ");
+				
+				System.out.println("Enter the terms separated by space: ");
 				inputGet=input.nextLine();
 				String[] inArr=inputGet.split(" ");
 				
@@ -112,41 +120,58 @@ public class InvertedIndex {
 				{
 					str=tokenize(inArr[i]);
 					
-					if(stopList(str))
+					if(checkStopList(str))
 					{
 						str=docMatch(str);
-						if(!str.equals(null))
+						if(!str.equals("-1"))
 						{
-							System.out.println(str);
-							String[] strArr = match(str);
-							for(int j = 0; j < strArr.length/2; j+=2)
+							ArrayList<String> temp = match(str);
+						
+							
+							for(int a=0;a<temp.size();a+=2)
 							{
-								if(checkB(bArr, str)!= -1)
-									b = new StrB(str);
+								if(!bArr.contains(temp.get(a)))
+								{
+									bArr.add(temp.get(a));
+									termCounter.add(Integer.parseInt(temp.get(a+1)));
+								}
 								else
 								{
-									b = bArr.get(checkB(bArr, str));
-									b.addCount(Integer.parseInt(strArr[j+1]));
+									int t=bArr.indexOf(temp.get(a));
+									int num= (termCounter.get(t)) + Integer.parseInt(temp.get(a+1));   
+									termCounter.set(t, num);
 								}
-							}
+								
+							}	
 							
 						}
 					}
 				}
-	
+				test(bArr,termCounter);
 			}
 			
-			public int checkB(ArrayList<StrB> bArr, String str)
+			public void test(ArrayList<String> bArr, ArrayList<Integer> termCounter)
 			{
-				StrB[] b = (StrB[]) bArr.toArray();
-				for(int i = 0; i < b.length; i++)
+				insertionSort(termCounter, bArr); 
+				
+				System.out.println("\nNumber of documents with at least one match: " + bArr.size());
+				System.out.println("\nTop matched documents are:");
+				
+				int count=1;
+				
+				for(int i=bArr.size()-1;i>bArr.size()-11;i--)
 				{
-					String one = b[i].getString();
-					if(one.equals(str))
-						return i;
+					if(i>=0)
+					{
+						System.out.println(count +". Document "+ bArr.get(i) + " with score : " + termCounter.get(i));
+						count++;
+					}
 				}
-				return -1;
+
 			}
+			
+			
+			
 			
 			public String docMatch(String str)
 			{
@@ -156,31 +181,48 @@ public class InvertedIndex {
 					return wordDictionary.getValue(str).getString();
 				}
 				
-				return null;	
+				return "-1";	
 			}
 			
 			
-			public String[] match(String str)
+			public ArrayList<String> match(String str)
 			{
-				int tt=0;
-				String [] idCount = new String[((str.length()/5)+1)*2];
 	
-				
-				for(int i=0;i<str.length();i+=5)
+				ArrayList<String> temp = new ArrayList<>();
+	
+				String[] t=str.split(", ");
+		
+				for(int i=0;i<t.length;i++)
 				{
-					idCount[tt]=  "" + str.charAt(i);
-					tt++;
-					idCount[tt] = "" + str.charAt(i+2);
-					tt++;
+					String[] t2=t[i].split(" ");
+					temp.add(t2[0]);
+					temp.add(t2[1]);
 				}
-				
-				return idCount;
-				
+				return temp;	
 			}
 			
 			
 			
-			
+			public static void insertionSort(ArrayList<Integer> termCounter,ArrayList<String> bArr) 
+			{
+				for (int i = 1; i < termCounter.size(); i++) {
+					  
+					  int currentElement = termCounter.get(i);
+					  String temp = bArr.get(i);
+					  int k;
+					  for (k = i - 1; k >= 0 && termCounter.get(k) > currentElement; k--)
+					  {
+						  
+						  
+						  termCounter.set(k+1, termCounter.get(k));
+						  bArr.set(k+1, bArr.get(k));
+					  }
+					    
+					  termCounter.set(k+1,currentElement);
+					  bArr.set(k+1,temp);
+				}
+					 
+			}
 			
 			
 			
