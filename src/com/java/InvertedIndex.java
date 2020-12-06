@@ -16,7 +16,7 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 3; i++) {
+		for (int i = 1; i < 10; i++) {
 			idNum = 1000 + i;
 			fileName = "Text-" + i + ".txt";
 			try {
@@ -43,7 +43,7 @@ public class InvertedIndex {
 							}
 							else {
 								idList.add(idNum);
-								idList.add(0);
+								idList.add(1);
 							}
 						}
 
@@ -107,10 +107,55 @@ public class InvertedIndex {
 
 			}
 
-			public void searchTerm(){
-				Scanner scan = new Scanner(System.in);
 
+			public void getTerm()
+			{
+				Scanner scanner=new Scanner(System.in);
+				String term;
+				String str;
+
+				System.out.println("Enter the terms separated by space ");
+				term=scanner.nextLine();
+				String[] inArr=term.split(" ");
+
+				for(int i=0;i<inArr.length;i++)
+				{
+					str=tokenize(inArr[i]);
+
+					if(stopList(str))
+					{
+						if(wordDictionary.contains(str)){
+							//System.out.println(str);
+							getKey(str);
+							System.out.println();
+
+						}
+						//call docMatch method
+						//System.out.println(wordDictionary.getValue(str));
+					}
+
+				}
 			}
+
+			public void getKey(String str){
+				Iterator<String> keyIterator = wordDictionary.getKeyIterator();
+				Iterator<ListWithIteratorInterface<Integer>> valueIterator = wordDictionary.getValueIterator();
+				ListWithIteratorInterface<Integer> idList = valueIterator.next();
+				String current = keyIterator.next();
+				while (keyIterator.hasNext()){
+					if(str.equals(current)){
+						System.out.println(current);
+						Iterator<Integer> listIterator = idList.getIterator();
+						System.out.print("Key: ");
+						while (listIterator.hasNext()){
+							System.out.print(+ listIterator.next() + " ");
+						}
+						}
+					idList = valueIterator.next();
+					current = keyIterator.next();
+					}
+				}
+
 
 			public void display(){
 			Iterator<String> keyIterator = wordDictionary.getKeyIterator();

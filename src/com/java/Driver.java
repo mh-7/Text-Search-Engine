@@ -13,6 +13,11 @@ public class Driver {
 
 		ii.display();
 
+		//ii.getKey("accept");
+		//ii.getKey("able");
+		System.out.println();
+		//ii.getTerm();
+
 	}
 
 }

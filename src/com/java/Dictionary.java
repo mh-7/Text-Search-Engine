@@ -173,7 +173,6 @@ public class Dictionary<K extends Comparable<? super K>, V>
 	public class valueIterator implements Iterator<V>
 	{
 		private Node nextNode;
-
 		private valueIterator(){nextNode = firstNode; }
 
 		public V next(){
