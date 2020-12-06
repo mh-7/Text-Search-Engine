@@ -6,7 +6,9 @@ public class InvertedIndex {
 	public DictionaryInterface<String, StrC> wordDictionary;
 	private static int idNum;
 	private static ArrayList<String> StopList;
-
+	public long startTime;
+	public long endTime;
+	Double retrievalTime;
 	public InvertedIndex() {
 		wordDictionary = new Dictionary<>();
 		StopList=new ArrayList<>();
@@ -18,12 +20,12 @@ public class InvertedIndex {
 		String str;
 
 
-		for (int i = 1; i < 101; i++) {
+		for (int i = 1; i < 424; i++) {
 			idNum = i;
 			fileName = "Text-" + i + ".txt";
 			try {
 				{
-					File file = new File("src\\com\\java\\collection\\" + fileName);
+					File file = new File("src/com/java/collection/" + fileName);
 
 					Scanner scan = new Scanner(file);
 					
@@ -77,7 +79,8 @@ public class InvertedIndex {
 			{
 				String str1;
 				try {
-					File file = new File("src\\com\\java\\stop-list.txt");
+					// if using mac change \\ to /
+					File file = new File("src/com/java/stop-list.txt");
 					Scanner scan = new Scanner(file);
 					while (scan.hasNext()) {
 						str1 = scan.next();
@@ -105,6 +108,9 @@ public class InvertedIndex {
 			
 			public void getWord()
 			{
+				//reset time and start timer
+				startTime = 0;
+				startTime = System.nanoTime();
 				Scanner input=new Scanner(System.in);
 				String inputGet;
 				String str;
@@ -152,9 +158,12 @@ public class InvertedIndex {
 			
 			public void test(ArrayList<String> bArr, ArrayList<Integer> termCounter)
 			{
+				//end timer
+				endTime = System.nanoTime();
+				retrievalTime = (double)endTime-startTime/1_000_000_000.0;
 				insertionSort(termCounter, bArr); 
 				
-				System.out.println("\nNumber of documents with at least one match: " + bArr.size());
+				System.out.println("\nNumber of documents with at least one match: " + bArr.size() + " (" + retrievalTime + " seconds)");
 				System.out.println("\nTop matched documents are:");
 				
 				int count=1;
