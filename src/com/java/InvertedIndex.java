@@ -102,7 +102,7 @@ public class InvertedIndex {
 				String inputGet;
 				String str;
 				
-				System.out.println("\n\nEnter the terms separated by space ");
+				System.out.println("\n\nEnter the terms separated by space: ");
 				inputGet=input.nextLine();
 				String[] inArr=inputGet.split(" ");
 				
@@ -110,13 +110,54 @@ public class InvertedIndex {
 				{
 					str=tokenize(inArr[i]);
 					
-					if(!stopList(str))
+					if(stopList(str))
 					{
-						//call docMatch method
+						str=docMatch(str);
+						if(!str.equals(null))
+						{
+							System.out.println(str);
+							
+						}
 					}
-
 				}
 	
+			}
+			
+			
+			public String docMatch(String str)
+			{
+				
+				if(wordDictionary.contains(str))
+				{
+					return wordDictionary.getValue(str).getString();
+				}
+				
+				return null;	
+			}
+			
+			
+			public String[] match(String str)
+			{
+				int tt=0;
+				String [] idCount = new String[((str.length()/5)+1)*2];
+	
+				
+				for(int i=0;i<str.length();i+=5)
+				{
+					idCount[tt]=  "" + str.charAt(i);
+					tt++;
+					idCount[tt] = "" + str.charAt(i+2);
+					tt++;
+				}
+				
+				return idCount;
 				
 			}
+			
+			
+			
+			
+			
+			
+			
 }
